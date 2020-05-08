@@ -1,0 +1,3 @@
+src_repo:  containers/libpod
+tag_prefix: ^v
+seperator: .
