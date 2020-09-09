@@ -1,6 +1,6 @@
 Name:          podman
 Version:       0.10.1
-Release:       3
+Release:       4
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -141,7 +141,8 @@ Conflicts:      docker docker-latest docker-ce docker-ee moby-engine
 This package installs a script named docker, which emulates the Docker CLI through podman command.
 
 %package help
-Summary: Help document for the podman package
+Summary:        Help document for the podman package
+Conflicts:      docker docker-latest docker-ce docker-ee moby-engine
 
 %description help
 Help document for the podman package
@@ -209,6 +210,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Wed Sep 9 2020 Guoshuai Sun <sunguoshuai@huawei.com> - 1:0.10.1-4
+- Add conflicts with docker-engine for help package
+
 * Thu Mar 12 2020 Ling Yang <lingyang2@huawei.com> - 1:0.10.1-3
 - Fixed install fail
 
