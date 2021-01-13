@@ -1,0 +1,24 @@
+From ca7abf80075e6ab1c90d7629fd3b5996e7f875bd Mon Sep 17 00:00:00 2001
+From: rpm-build <rpm-build>
+Date: Wed, 13 Jan 2021 09:26:57 +0800
+Subject: [PATCH] patch for podman pull
+
+---
+ libpod.conf | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libpod.conf b/libpod.conf
+index 2976cec..4001d21 100644
+--- a/libpod.conf
++++ b/libpod.conf
+@@ -7,6 +7,7 @@ image_default_transport = "docker://"
+ # Paths to look for a valid OCI runtime (runc, runv, etc)
+ runtime_path = [
+ 	     "/usr/bin/runc",
++	     "/usr/local/bin/runc",
+ 	     "/usr/sbin/runc",
+ 	     "/sbin/runc",
+ 	     "/bin/runc",
+-- 
+2.27.0
+
