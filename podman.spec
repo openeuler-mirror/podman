@@ -1,6 +1,6 @@
 Name:          podman
 Version:       0.10.1
-Release:       3
+Release:       4
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -108,6 +108,8 @@ Provides: bundled(golang(k8s.io/client-go)) = 7cd1d3291b7d9b1e2d54d4b69eb65995ea
 Provides: bundled(golang(k8s.io/kube-openapi)) = 275e2ce91dec4c05a4094a7b1daee5560b555ac9
 Provides: bundled(golang(k8s.io/utils)) = 258e2a2fa64568210fbd6267cf1d8fd87c3cb86e
 
+Patch1:  0001-podman-patch-for-local-search.patch 
+
 %description
 Podman manages the entire container ecosystem which includes pods,
 containers, container images, and container volumes using the libpod library. 
@@ -209,6 +211,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Wed Jan 13 2021 Shengjing Wei <weishengjing1@huawei.com> - 1:0.10.1-4
+- Fix podman pull failed with issue I2BF99
+
 * Thu Mar 12 2020 Ling Yang <lingyang2@huawei.com> - 1:0.10.1-3
 - Fixed install fail
 
