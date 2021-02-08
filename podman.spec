@@ -1,12 +1,12 @@
 Name:          podman
 Version:       0.10.1
-Release:       5 
+Release:       6
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
 URL:           https://podman.io/
 Source0:       https://github.com/containers/libpod/archive/e4a155328fb88590fafd3d4e845f9bca49133f62/libpod-e4a1553.tar.gz
-BuildRequires: compiler(go-compiler) btrfs-progs-devel glib2-devel glibc-devel glibc-static
+BuildRequires: golang btrfs-progs-devel glib2-devel glibc-devel glibc-static
 BuildRequires: git go-md2man gpgme-devel libassuan-devel libgpg-error-devel libseccomp-devel
 BuildRequires: libselinux-devel ostree-devel pkgconfig make
 Requires:      docker-runc containers-common containernetworking-plugins >= 0.7.3-2 iptables nftables conmon
@@ -212,6 +212,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Mon Feb 8 2021 lingsheng <lingsheng@huawei.com> - 1:0.10.1-6
+- Change BuildRequires to golang
+
 * Sat Jan 9 2021 Shengjing Wei <weishengjing1@huawei.com> - 1:0.10.1-5
 - Fixed podman pull failed with issue I2BF99
 
