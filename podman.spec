@@ -1,6 +1,6 @@
 Name:          podman
 Version:       0.10.1
-Release:       5
+Release:       6
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -113,6 +113,7 @@ Patch2:   CVE-2021-20188-PRE1.patch
 Patch3:   CVE-2021-20188-PRE2.patch
 Patch4:   CVE-2021-20188-PRE3.patch
 Patch5:   CVE-2021-20188.patch
+Patch6:   0002-Fix-the-invalid-memory-address-reference.patch
 
 %description
 Podman manages the entire container ecosystem which includes pods,
@@ -215,6 +216,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Sat Mar 13 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-6
+- Fix the invalid memory address reference
+
 * Thu Mar 4 2021 wangxiao <wangxiao65@huawei.com> - 1:0.10.1-5
 - Fix CVE-2021-20188
 
