@@ -1,6 +1,6 @@
 Name:          podman
 Version:       0.10.1
-Release:       6
+Release:       7
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -107,11 +107,13 @@ Provides: bundled(golang(k8s.io/apiserver)) = 4d1163080139f1f9094baf8a3a6099e85e
 Provides: bundled(golang(k8s.io/client-go)) = 7cd1d3291b7d9b1e2d54d4b69eb65995eaf8888e
 Provides: bundled(golang(k8s.io/kube-openapi)) = 275e2ce91dec4c05a4094a7b1daee5560b555ac9
 Provides: bundled(golang(k8s.io/utils)) = 258e2a2fa64568210fbd6267cf1d8fd87c3cb86e
+
 Patch1:   0001-podman-patch-for-local-search.patch
 Patch2:   CVE-2021-20188-PRE1.patch
 Patch3:   CVE-2021-20188-PRE2.patch
 Patch4:   CVE-2021-20188-PRE3.patch
 Patch5:   CVE-2021-20188.patch
+Patch6:   0002-Fix-the-invalid-memory-address-reference.patch
 
 %description
 Podman manages the entire container ecosystem which includes pods,
@@ -215,6 +217,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Sat Mar 13 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-7
+- Fix the invalid memory address reference
+
 * Thu Mar 4 2021 wangxiao <wangxiao65@huawei.com> - 1:0.10.1-6
 - Fix CVE-2021-20188
 
