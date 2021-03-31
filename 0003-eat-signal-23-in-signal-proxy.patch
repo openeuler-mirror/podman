@@ -1,0 +1,29 @@
+From 7bb9c6b9d1f195391f50047447b8caec404b5c2a Mon Sep 17 00:00:00 2001
+From: maminjie <maminjie1@huawei.com>
+Date: Wed, 31 Mar 2021 11:22:39 +0800
+Subject: [PATCH] eat signal 23 in signal proxy
+
+reference to: https://github.com/containers/podman/pull/5496
+---
+ cmd/podman/sigproxy.go | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/cmd/podman/sigproxy.go b/cmd/podman/sigproxy.go
+index 16861ba..9bb104d 100644
+--- a/cmd/podman/sigproxy.go
++++ b/cmd/podman/sigproxy.go
+@@ -19,7 +19,10 @@ func ProxySignals(ctr *libpod.Container) {
+ 		for s := range sigBuffer {
+ 			// Ignore SIGCHLD and SIGPIPE - these are mostly likely
+ 			// intended for the podman command itself.
+-			if s == signal.SIGCHLD || s == signal.SIGPIPE {
++			// SIGURG was added because of golang 1.14 and its preemptive changes
++			// causing more signals to "show up".
++			// https://github.com/containers/libpod/issues/5483
++			if s == syscall.SIGCHLD || s == syscall.SIGPIPE || s == syscall.SIGURG {
+ 				continue
+ 			}
+ 
+-- 
+2.23.0
+
