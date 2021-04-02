@@ -1,6 +1,6 @@
 Name:          podman
 Version:       0.10.1
-Release:       8
+Release:       9
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -11,7 +11,8 @@ BuildRequires: golang btrfs-progs-devel glib2-devel glibc-devel glibc-static
 BuildRequires: git gpgme-devel libassuan-devel libgpg-error-devel libseccomp-devel
 BuildRequires: libselinux-devel ostree-devel pkgconfig make
 Requires:      docker-runc containers-common containernetworking-plugins >= 0.7.3-2 iptables nftables conmon
-Recommends:    container-selinux >= 2:2.71 slirp4netns
+Requires:      (container-selinux if selinux-policy)
+Recommends:    slirp4netns
 
 Provides: bundled(golang(github.com/Azure/go-ansiterm)) = 19f72df4d05d31cbe1c56bfc8045c96babff6c7e
 Provides: bundled(golang(github.com/blang/semver)) = v3.5.0
@@ -115,6 +116,7 @@ Patch3:   CVE-2021-20188-PRE2.patch
 Patch4:   CVE-2021-20188-PRE3.patch
 Patch5:   CVE-2021-20188.patch
 Patch6:   0002-Fix-the-invalid-memory-address-reference.patch
+Patch7:   0003-eat-signal-23-in-signal-proxy.patch
 
 %description
 Podman manages the entire container ecosystem which includes pods,
@@ -223,6 +225,10 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Wed Mar 31 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-9
+- Eat signal 23 in signal proxy
+- Require container-selinux only when selinux-policy is installed
+
 * Sat Mar 13 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-8
 - Fix the invalid memory address reference
 
