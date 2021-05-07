@@ -1,13 +1,14 @@
 Name:          podman
 Version:       0.10.1
-Release:       7
+Release:       8
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
 URL:           https://podman.io/
 Source0:       https://github.com/containers/libpod/archive/e4a155328fb88590fafd3d4e845f9bca49133f62/libpod-e4a1553.tar.gz
-BuildRequires: compiler(go-compiler) btrfs-progs-devel glib2-devel glibc-devel glibc-static
-BuildRequires: git go-md2man gpgme-devel libassuan-devel libgpg-error-devel libseccomp-devel
+Source1:       https://github.com/cpuguy83/go-md2man/archive/v1.0.10.tar.gz
+BuildRequires: golang btrfs-progs-devel glib2-devel glibc-devel glibc-static
+BuildRequires: git gpgme-devel libassuan-devel libgpg-error-devel libseccomp-devel
 BuildRequires: libselinux-devel ostree-devel pkgconfig make
 Requires:      docker-runc containers-common containernetworking-plugins >= 0.7.3-2 iptables nftables conmon
 Requires:      (container-selinux if selinux-policy)
@@ -161,9 +162,14 @@ sed -i '/\/bin\/env/d' completions/bash/%{name}
 sed -i 's/0.0.0/%{version}/' contrib/python/%{name}/setup.py
 sed -i 's/0.0.0/%{version}/' contrib/python/py%{name}/setup.py
 mv pkg/hooks/README.md pkg/hooks/README-hooks.md
+tar -xf %SOURCE1
 
 %build
-mkdir _build
+mkdir -p _build/bin _output/bin
+cd go-md2man-*
+go build -mod=vendor -o ../_build/bin/go-md2man .
+cp ../_build/bin/go-md2man ../_output/bin/go-md2man
+cd -
 cd _build
 mkdir -p src/github.com/containers
 ln -s ../../../../ src/github.com/containers/libpod
@@ -218,6 +224,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Thu May  6 2021 lingsheng <lingsheng@huawei.com> - 1:0.10.1-8
+- Change BuildRequires to golang
+
 * Wed Mar 31 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-7
 - Eat signal 23 in signal proxy
 - Require container-selinux only when selinux-policy is installed
