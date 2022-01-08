@@ -1,6 +1,7 @@
+%define debug_package %{nil}
 Name:          podman
 Version:       0.10.1
-Release:       10
+Release:       11
 Summary:       A daemonless container engine for managing Containers
 Epoch:         1
 License:       ASL 2.0
@@ -178,6 +179,7 @@ cd -
 ln -s vendor src
 export GOPATH=$(pwd)/_build:$(pwd):$(pwd):%{gopath}
 export BUILDTAGS="varlink selinux seccomp $(hack/btrfs_installed_tag.sh) $(hack/btrfs_tag.sh) $(hack/libdm_tag.sh) exclude_graphdriver_devicemapper"
+export GO111MODULE=off
 go generate ./cmd/%{name}/varlink/...
 BUILDTAGS=$BUILDTAGS make binaries docs
 
@@ -225,6 +227,9 @@ install -Dp -m644 libpod.conf %{buildroot}%{_datadir}/containers/libpod.conf
 %{_mandir}/man5/*.5*
 
 %changelog
+* Sat Jan 08 2022 houyingchao <houyingchao@huawei.com> 1:0.10.1-11
+- Solve the podman's compilation failure
+
 * Wed Mar 31 2021 maminjie <maminjie1@huawei.com> - 1:0.10.1-10
 - Eat signal 23 in signal proxy
 - Require container-selinux only when selinux-policy is installed
